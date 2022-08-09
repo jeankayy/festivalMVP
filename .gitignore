@@ -1,3 +1,10 @@
+#Secrets
+.env
+
+#User-specfic
+client/dist/bundle.js
+client/dist/bundle.js.map
+
 # Logs
 logs
 *.log

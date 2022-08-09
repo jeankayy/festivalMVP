@@ -31,15 +31,8 @@ module.exports = {
       },
     ],
   },
-  // devServer: {
-  //   index: "",
-  //   proxy: {
-  //     context: () => true,
-  //     target: "http://localhost:3000",
-  //   },
-  // },
+
   plugins: [
-    // new ReactRefreshPlugin(), // See note below...
     new HtmlWebpackPlugin({
       title: "Discover Artists",
     }),
