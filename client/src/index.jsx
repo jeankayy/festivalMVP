@@ -2,7 +2,8 @@ import { createRoot } from 'react-dom/client';
 import React from 'react';
 import axios from 'axios';
 import DiscoverForm from './discoverForm.jsx';
-import ArtistList from './artistList.jsx'
+import ArtistList from './artistList.jsx';
+
 
 class App extends React.Component {
 
@@ -25,31 +26,33 @@ class App extends React.Component {
 
   handleFormClick = (event) => {
     event.preventDefault();
-    let params = {'number': this.state.number,
-                 'festival': this.state.festival
-                }
-    console.log(params)
-    axios.get('/artists', {params})
-    .then((res) => {
-      var data = res.data
-      console.log('res data', data)
-      var updateArtists = this.state.artists;
-      data.forEach((artist) => {updateArtists.push(artist)})
-      this.setState({
-        artists: updateArtists
+    let params = {
+      'number': this.state.number,
+      'festival': this.state.festival
+    }
+    axios.get('/artists', { params })
+      .then((res) => {
+        var data = res.data
+        console.log('res data', data)
+        var updateArtists = this.state.artists;
+        data.forEach((artist) => { updateArtists.push(artist) })
+        this.setState({
+          artists: updateArtists
+        })
       })
-    })
-    .catch((err) => console.log(err))
+      .catch((err) => console.log(err))
   }
 
   render() {
 
     return (
-      <div>
-         <DiscoverForm festival = {this.state.festival} number = {this.state.number} handleChange = {this.handleChange} handleFormClick = {this.handleFormClick}/>
-         <ArtistList artists = {this.state.artists}/>
+
+    <div>
+        <DiscoverForm festival={this.state.festival} number={this.state.number} handleChange={this.handleChange} handleFormClick={this.handleFormClick} />
+        <ArtistList artists = {this.state.artists}/>
       </div>
     )
+
   }
 }
 

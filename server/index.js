@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const {getInitialList} = require('../database/queries.js');
+const {getArtistInfo} = require('./spotifyHelpers.js');
 
 app.use(express.json());
 app.use(express.static('client/dist'))
@@ -24,5 +25,15 @@ app.get('/artists', function(req,res){
   .catch((err) => {
     console.log('err', err);
     res.SendStatus(404)
+  })
+})
+
+app.get('/spotifyInfo', function(req,res){
+  let artist = req.query.artist
+  getArtistInfo(artist)
+  .then((data) => {res.send(data)})
+  .catch((err) => {
+    console.log('err', err);
+    res.sendStatus(404)
   })
 })
