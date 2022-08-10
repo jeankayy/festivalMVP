@@ -24,8 +24,8 @@ const getAuth = async () => {
 }
 
 const getArtistInfo = async (artist) => {
-  const access_token = await getAuth();
-  const api_url = `https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`
+  let access_token = await getAuth();
+  let api_url = `https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`
   try{
     const response = await axios.get(api_url, {
       headers: {
@@ -38,4 +38,40 @@ const getArtistInfo = async (artist) => {
   }
 };
 
+//need to work on this
+const createPlaylist = async () => {
+  let access_token = await getAuth();
+  let user = process.env.SPOTIFY_USER_ID;
+  let api_url = `https://api.spotify.com/v1/users/${user}/playlists`
+  try{
+    const response = await axios.post(api_url, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      },
+      data: {'name': 'dailyPlaylist'}
+    });
+    console.log('response', response)
+    return response.data;
+  }catch(error){
+    console.log('error',error);
+  }
+}
+
+const getTopTracks = async (artistId) => {
+  let access_token = await getAuth();
+  let api_url = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`
+  try{
+    const response = await axios.get(api_url, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      },
+    });
+    return response.data;
+  }catch(error){
+    console.log('error',error);
+  }
+}
+
 exports.getArtistInfo = getArtistInfo;
+exports.createPlaylist = createPlaylist;
+exports.getTopTracks = getTopTracks;

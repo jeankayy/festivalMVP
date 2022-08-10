@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       artists: [],
       festival: 'ACL 2022 Weekend 1',
-      number: 1,
+      number: 5,
     }
   }
 
@@ -37,7 +37,8 @@ class App extends React.Component {
         var updateArtists = this.state.artists;
         data.forEach((artist) => { updateArtists.push(artist) })
         this.setState({
-          artists: updateArtists
+          artists: updateArtists,
+          number: 1
         })
       })
       .catch((err) => console.log(err))
