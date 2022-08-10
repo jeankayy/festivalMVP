@@ -30,7 +30,6 @@ app.get('/artists', function(req,res){
 
 app.get('/spotifyInfo', function(req,res){
   let artist = req.query.artist
-  console.log(artist)
   getArtistInfo(artist)
   .then((data) => {res.send(data)})
   .catch((err) => {
@@ -48,7 +47,6 @@ app.get('/topTracks', function(req,res){
     res.sendStatus(404)
   })
 })
-
 
 app.post('/createPlaylist', function(req,res){
   createPlaylist()
