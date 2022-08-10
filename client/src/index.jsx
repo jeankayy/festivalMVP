@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import DiscoverForm from './discoverForm.jsx';
 import ArtistList from './artistList.jsx';
+import './styles.css';
 
 
 class App extends React.Component {
@@ -13,6 +14,7 @@ class App extends React.Component {
       artists: [],
       festival: 'ACL 2022 Weekend 1',
       number: 5,
+      currentPage: DiscoverForm
     }
   }
 
@@ -38,29 +40,31 @@ class App extends React.Component {
         data.forEach((artist) => { updateArtists.push(artist) })
         this.setState({
           artists: updateArtists,
-          number: 1
+          number: 1,
+          currentPage: ArtistList
         })
       })
       .catch((err) => console.log(err))
   }
 
+
+
   render() {
 
     return (
 
-    <div>
-        <DiscoverForm festival={this.state.festival} number={this.state.number} handleChange={this.handleChange} handleFormClick={this.handleFormClick} />
-        <ArtistList artists = {this.state.artists}/>
-      </div>
+    <div className = "app">
+        <this.state.currentPage festival={this.state.festival} number={this.state.number} handleChange={this.handleChange} handleFormClick={this.handleFormClick} artists = {this.state.artists}/>
+    </div>
     )
 
   }
 }
 
 const root1 = document.createElement("div");
-root1.setAttribute("id", "app");
+root1.setAttribute("id", "app-container");
 document.body.appendChild(root1);
-const container = document.getElementById("app");
+const container = document.getElementById("app-container");
 const root = createRoot(container)
 root.render(<App />)
 

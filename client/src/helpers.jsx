@@ -12,7 +12,9 @@ const showInfoModal = (infoObject, tracks) => {
   return (
     <React.Fragment>
       Artist: {infoObject.name}
+      <br/>
       Genre: {genreList}
+      <br/>
     </React.Fragment>
   )
 }
@@ -34,8 +36,11 @@ const showTracks = (tracks) => {
   return(
     <React.Fragment>
       <iframe src= {trackURL} width="75%" height="80px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br/>
       <iframe src= {trackURL1} width="75%" height="80px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br/>
       <iframe src= {trackURL2} width="75%" height="80px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br/>
     </React.Fragment>
   )
 }

@@ -68,7 +68,7 @@ class ArtistTile extends React.Component {
 
   render(){
     if(this.state.showInfo){
-      var infoModal = <React.Fragment>{showInfoModal(this.state.spotifyInfo)}{showTracks(this.state.tracks)}</React.Fragment>
+      var infoModal = <div className = "info-modal">{showInfoModal(this.state.spotifyInfo)}{showTracks(this.state.tracks)}</div>
     } else {
       var infoModal = <React.Fragment/>
     }
