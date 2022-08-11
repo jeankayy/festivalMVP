@@ -29,14 +29,13 @@ class App extends React.Component {
   handleFormClick = (event) => {
     event.preventDefault();
     let params = {
-      'number': this.state.number,
+      'number': 5,
       'festival': this.state.festival
     }
     axios.get('/artists', { params })
       .then((res) => {
         var data = res.data
-        console.log('res data', data)
-        var updateArtists = this.state.artists;
+        var updateArtists = []
         data.forEach((artist) => { updateArtists.push(artist) })
         this.setState({
           artists: updateArtists,
@@ -47,14 +46,40 @@ class App extends React.Component {
       .catch((err) => console.log(err))
   }
 
+  removeArtist = (name) => {
+    let params = {
+      'number': this.state.number,
+      'festival': this.state.festival
+    }
+    axios.get('/artists', { params })
+      .then((res) => {
+        console.log(name)
+        var data = res.data[0]
+        var current = this.state.artists;
+        var updateArtists = []
+        current.forEach((artist) => { if(artist.artist_name !== name){updateArtists.push(artist)}})
+        updateArtists.push(data);
+        this.setState({
+          artists: updateArtists,
+        })
+      })
+      .catch((err) => console.log(err))
+  }
 
+  back = (event) => {
+    this.setState({
+      artists: [],
+      festival: 'ACL 2022 Weekend 1',
+      number: 5,
+      currentPage: DiscoverForm
+    })
+  }
 
   render() {
 
     return (
-
     <div className = "app">
-        <this.state.currentPage festival={this.state.festival} number={this.state.number} handleChange={this.handleChange} handleFormClick={this.handleFormClick} artists = {this.state.artists}/>
+        <this.state.currentPage festival={this.state.festival} number={this.state.number} handleChange={this.handleChange} handleFormClick={this.handleFormClick} artists = {this.state.artists} removeArtist = {this.removeArtist} festival = {this.state.festival} back = {this.back}/>
     </div>
     )
 

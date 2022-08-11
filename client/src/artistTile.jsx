@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {showInfoModal, showTracks} from './helpers.jsx';
-
+import InfoModal from './infoModal.jsx'
 
 class ArtistTile extends React.Component {
 
@@ -11,7 +10,6 @@ class ArtistTile extends React.Component {
       spotifyInfo: '',
       showInfo: false,
       tracks: ''
-
     }
   }
 
@@ -20,8 +18,8 @@ class ArtistTile extends React.Component {
   }
 
   componentDidUpdate = (event) => {
-    if(this.state.tracks === '' && this.state.spotifyInfo !== ''){
-      this.getTopTracks()
+    if(this.state.lastCall !== this.props.artistName){
+      this.getSpotifyInfo()
     }
   }
 
@@ -39,43 +37,48 @@ class ArtistTile extends React.Component {
     }
     axios.get('/spotifyInfo', {params})
     .then((res) => {
+      console.log('res info', res)
       var data = res.data[0]
-      this.setState({
-        spotifyInfo: data
-      })
+      var id = data.id
+      var last = this.props.artistName
+      var params = {
+      artist: id
+      }
+      axios.get('/topTracks', {params})
+      .then((res) => {
+        console.log('res topTracks', res)
+        var trackdata = res.data.tracks
+        this.setState({
+          spotifyInfo: data,
+          tracks: trackdata,
+          lastCall : last
+        })
+     })
     })
     .catch((err) => {
       console.log(err)
     })
   }
 
-  getTopTracks = () => {
-    var id = this.state.spotifyInfo.id
-    var params = {
-      artist: id
-    }
-    axios.get('/topTracks', {params})
-    .then((res) => {
-      var data = res.data.tracks
-      this.setState({
-        tracks: data
-      })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  playAnother = () => {
+    this.handleArtistClick();
+    this.handleArtistClick();
   }
+
 
   render(){
     if(this.state.showInfo){
-      var infoModal = <div className = "info-modal">{showInfoModal(this.state.spotifyInfo)}{showTracks(this.state.tracks)}</div>
+      var infoModal = <InfoModal spotifyInfo = {this.state.spotifyInfo} tracks = {this.state.tracks}/>
     } else {
       var infoModal = <React.Fragment/>
     }
 
   return (
-    <div className = "artist-tile" onClick = {this.handleArtistClick}>
-    {this.props.artistName}
+    <div>
+    <div className = "artist-tile">
+    <span className = "artist-name" onClick = {this.handleArtistClick}>{this.props.artistName}</span>
+    <button className = 'remove-button' onClick = {() => { if(this.state.showInfo === true){this.handleArtistClick()} this.props.removeArtist(this.props.artistName)}}>X</button>
+    </div>
     {infoModal}
     </div>
   )

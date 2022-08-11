@@ -24,9 +24,18 @@ class ArtistList extends React.Component {
 
   return (
     <div className = "artists-list">
-    {artists.map(artist => {return <ArtistTile artistName = {artist.artist_name}/> })
+
+    <p className = 'artists-list-header'>Artists playing {this.props.festival}</p>
+
+    {artists.map(artist => {return <ArtistTile artistName = {artist.artist_name} removeArtist = {this.props.removeArtist}/> })
     }
-   </div>
+
+    <div className = "artists-list-footer">
+    <button onClick = {this.props.back}> Back </button>
+    <button onClick = {this.props.handleFormClick}> New List! </button>
+    </div>
+
+    </div>
   )
   }
 
