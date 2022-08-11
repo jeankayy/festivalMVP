@@ -18,6 +18,14 @@ class ArtistList extends React.Component {
     })
   }
 
+  createPlaylist = (event) => {
+    let currentArtists = this.props.artists
+    let artists = currentArtists.map((artist) => {return artist.artist_name})
+    axios.post('/createPlaylist', {artists})
+    .then(() => {this.props.back()})
+    .catch((err) => {console.log(err)})
+  }
+
   render(){
 
   var artists = this.props.artists;
@@ -32,6 +40,7 @@ class ArtistList extends React.Component {
 
     <div className = "artists-list-footer">
     <button onClick = {this.props.back}> Back </button>
+    <button className = 'create-playlist' onClick = {this.createPlaylist}> Create Playlist </button>
     <button onClick = {this.props.handleFormClick}> New List! </button>
     </div>
 

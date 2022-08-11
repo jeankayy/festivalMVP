@@ -42,7 +42,8 @@ class ArtistTile extends React.Component {
       var id = data.id
       var last = this.props.artistName
       var params = {
-      artist: id
+      artist: id,
+      name: last
       }
       axios.get('/topTracks', {params})
       .then((res) => {

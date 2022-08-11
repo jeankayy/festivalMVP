@@ -24,7 +24,11 @@
 }
 
 .discover-form button:hover{
-  background-color: #4CAF50;
+  background-color:lightgrey;
+  color: black;
+  border: 2px solid lightgrey;
+  border-radius: 5px;
+  font-size: xx-large;
 }
 
 .discover-form select{
@@ -93,7 +97,7 @@
 }
 
 .artist-name:hover{
-  color: #4CAF50;
+  color: lightgrey;
 }
 
 .info-modal{
@@ -107,4 +111,12 @@
 
 .modal-text{
   margin: 0;
+}
+
+.create-playlist:hover{
+  background-color:lightgrey;
+  color: black;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  font-size: medium;
 }

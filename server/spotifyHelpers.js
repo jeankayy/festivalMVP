@@ -14,7 +14,7 @@ const getAuth = async () => {
     const response = await axios.post(token_url, data, {
       headers: {
         'Authorization': `Basic ${auth_token}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       }
     })
     return response.data.access_token;
@@ -29,8 +29,8 @@ const getArtistInfo = async (artist) => {
   try{
     const response = await axios.get(api_url, {
       headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
+        'Authorization': `Bearer ${access_token}`,
+      },
     });
     return response.data.artists.items;
   }catch(error){
@@ -39,17 +39,44 @@ const getArtistInfo = async (artist) => {
 };
 
 //need to work on this
+//current dynamic authorization pass does not work, using harc coded spotigy token
 const createPlaylist = async () => {
-  let access_token = await getAuth();
+  console.log('asking spotify')
+  let access = process.env.SPOTIFY_CREATE_TOKEN;
   let user = process.env.SPOTIFY_USER_ID;
-  let api_url = `https://api.spotify.com/v1/users/${user}/playlists`
   try{
-    const response = await axios.post(api_url, {
+    const response = await axios('https://api.spotify.com/v1/users/' + user + '/playlists', {
+      method: 'POST',
       headers: {
-        'Authorization': `Bearer ${access_token}`
+          'Authorization' : 'Bearer ' + access,
+          'Content-Type': 'application/json'
       },
-      data: {'name': 'dailyPlaylist'}
-    });
+      data: JSON.stringify({
+          name: 'mvp playlist',
+          description: 'playlist'
+      })
+  })
+    console.log('response', response)
+    return response.data.id;
+  }catch(error){
+    console.log('error',error);
+  }
+}
+
+const addTracks = async(playlist, tracks) => {
+  let access = process.env.SPOTIFY_CREATE_TOKEN;
+  let playlistid = playlist
+  let trackURIs = tracks
+  console.log(playlistid, tracks)
+  try{
+    const response = await axios('https://api.spotify.com/v1/playlists/' + playlistid + '/tracks', {
+      method: 'PUT',
+      headers: {
+        'Authorization' : 'Bearer ' + access,
+        'Content-Type': 'application/json'
+      },
+      params: {'uris': trackURIs},
+  })
     console.log('response', response)
     return response.data;
   }catch(error){
@@ -75,3 +102,4 @@ const getTopTracks = async (artistId) => {
 exports.getArtistInfo = getArtistInfo;
 exports.createPlaylist = createPlaylist;
 exports.getTopTracks = getTopTracks;
+exports.addTracks = addTracks;
