@@ -16,7 +16,7 @@
 }
 
 .discover-form button{
-  background-color: white;
+  background-color: #4CAF50;
   color: black;
   border: 2px solid #4CAF50;
   border-radius: 5px;
@@ -30,7 +30,7 @@
 .discover-form select{
   background-color: white;
   color: black;
-  border: 0 px;
+  border: none;
   border-bottom: 2px solid black;
   font-size: xx-large;
 }
@@ -51,8 +51,8 @@
 
 .artists-list-header{
   font-size: xx-large;
-  font-weight: bold;
   background-color: #4CAF50;
+  margin-bottom: 0px;
 }
 
 .artists-list-footer{

@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {showInfoModal, showTracks} from './helpers.jsx';
-
+import InfoModal from './infoModal.jsx'
 
 class ArtistTile extends React.Component {
 
@@ -61,9 +60,15 @@ class ArtistTile extends React.Component {
     })
   }
 
+  playAnother = () => {
+    this.handleArtistClick();
+    this.handleArtistClick();
+  }
+
+
   render(){
     if(this.state.showInfo){
-      var infoModal = <div className = "info-modal">{showInfoModal(this.state.spotifyInfo)}{showTracks(this.state.tracks)}</div>
+      var infoModal = <InfoModal spotifyInfo = {this.state.spotifyInfo} tracks = {this.state.tracks}/>
     } else {
       var infoModal = <React.Fragment/>
     }
@@ -72,7 +77,7 @@ class ArtistTile extends React.Component {
     <div>
     <div className = "artist-tile">
     <span className = "artist-name" onClick = {this.handleArtistClick}>{this.props.artistName}</span>
-    <button className = 'remove-button' onClick = {() => {this.props.removeArtist(this.props.artistName)}}>X</button>
+    <button className = 'remove-button' onClick = {() => { if(this.state.showInfo === true){this.handleArtistClick()} this.props.removeArtist(this.props.artistName)}}>X</button>
     </div>
     {infoModal}
     </div>

@@ -25,7 +25,7 @@ class ArtistList extends React.Component {
   return (
     <div className = "artists-list">
 
-    <p className = 'artists-list-header'>Artists from {this.props.festival}</p>
+    <p className = 'artists-list-header'>Artists playing {this.props.festival}</p>
 
     {artists.map(artist => {return <ArtistTile artistName = {artist.artist_name} removeArtist = {this.props.removeArtist}/> })
     }
