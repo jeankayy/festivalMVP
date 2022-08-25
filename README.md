@@ -4,7 +4,7 @@ I was asked to build an MVP of my choice with a two day turnaround. My app makes
 
 ## Motivation
 
-Project to deepen understanding of front-end development.
+Project to deepen understanding of full-stack development under time contstraints. 
 
 ## Built With
 
